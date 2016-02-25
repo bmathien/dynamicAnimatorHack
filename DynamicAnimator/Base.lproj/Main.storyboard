@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -16,12 +17,36 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wb6-Bp-jGv">
+                                <rect key="frame" x="20" y="559" width="212" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FaC-w2-flZ">
+                                <rect key="frame" x="284" y="347" width="74" height="68"/>
+                                <state key="normal" title="start"/>
+                                <connections>
+                                    <action selector="startbuttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4pP-sr-Ztv"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Wb6-Bp-jGv" secondAttribute="bottom" constant="5" id="IA0-z9-qLi"/>
+                            <constraint firstItem="FaC-w2-flZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Z8p-7h-bgR"/>
+                            <constraint firstItem="Wb6-Bp-jGv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="5" id="g2N-a9-AMw"/>
+                        </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0JV-xg-ZRc" appends="YES" id="Tel-WU-KZ5"/>
                         </connections>
                     </view>
+                    <connections>
+                        <outlet property="livesLabel" destination="Wb6-Bp-jGv" id="deL-K6-51a"/>
+                        <outlet property="mybutton" destination="FaC-w2-flZ" id="MgM-Z6-ubt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <panGestureRecognizer minimumNumberOfTouches="1" id="0JV-xg-ZRc">
@@ -30,6 +55,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="242" y="545"/>
         </scene>
     </scenes>
 </document>
