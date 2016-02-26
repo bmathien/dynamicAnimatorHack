@@ -17,6 +17,8 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
     var paddle = UIView()
     var ball = UIView()
     var brick = UIView()
+    var brickArray : [UIView] = []
+    var everythingArray : [UIView] = []
     var lives = 5 //add
     var collisionBehavior = UICollisionBehavior()
     var pushBehavior = UIPushBehavior()
@@ -25,12 +27,18 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
+        createRow(5, Xspace: 5, Yoffset: 30, Color: UIColor.redColor())
+        createRow(3, Xspace: 5, Yoffset: 65, Color: UIColor.cyanColor())
+        createRow(9, Xspace: 5, Yoffset: 100, Color: UIColor.yellowColor())
+        createRow(1, Xspace: 5, Yoffset: 135, Color: UIColor.magentaColor())
+
+
         // add ball to view
         ball = UIView(frame: CGRectMake(view.center.x - 10, view.center.y, 20, 20))
         ball.backgroundColor = UIColor.lightGrayColor()
         ball.layer.cornerRadius = 10.25
         ball.clipsToBounds = true
+        everythingArray.append(ball)
         view.addSubview(ball)
         
         //add paddle
@@ -39,11 +47,10 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
         paddle.layer.cornerRadius = 5
         paddle.clipsToBounds = true
         view.addSubview(paddle)
+        everythingArray.append(paddle)
         
         //add brick
-        brick = UIView(frame: CGRectMake(view.center.x - 30, 20, 60, 30 ))
-        brick.backgroundColor = UIColor.cyanColor()
-        view.addSubview(brick)
+
         
         myDynamicAnimator = UIDynamicAnimator(referenceView: view)
         
@@ -63,7 +70,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
         myDynamicAnimator.addBehavior(paddleDynamicBehavior)
         
         //brick behavior
-        let brickDynamicBehavior = UIDynamicItemBehavior(items: [brick])
+        let brickDynamicBehavior = UIDynamicItemBehavior(items: brickArray)
         brickDynamicBehavior.density = 10000
         brickDynamicBehavior.resistance = 100
         brickDynamicBehavior.allowsRotation = false
@@ -74,7 +81,7 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
         pushBehavior.angle = -1.1
         pushBehavior.magnitude = 0.3// force given
         
-        collisionBehavior = UICollisionBehavior(items: [ball, paddle, brick])
+        collisionBehavior = UICollisionBehavior(items: everythingArray)
         collisionBehavior.translatesReferenceBoundsIntoBoundary = true
         collisionBehavior.collisionMode = .Everything
         collisionBehavior.collisionDelegate = self //add
@@ -123,20 +130,38 @@ class ViewController: UIViewController, UICollisionBehaviorDelegate //add delega
     //collision for 2 items
     func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item1: UIDynamicItem, withItem item2: UIDynamicItem, atPoint p: CGPoint)
     {
+        for brick in brickArray
+        {
         if item1.isEqual(ball) && item2.isEqual(brick)  || item2.isEqual(brick) && item2.isEqual(ball)
         {
             print("hit")
-            if brick.backgroundColor == UIColor.cyanColor()
-            {
-            brick.backgroundColor = UIColor.magentaColor()
-            }
-            else
-            {
+
                 brick.hidden = true
                 collisionBehavior.removeItem(brick)
                 myDynamicAnimator.updateItemUsingCurrentState(paddle)
             }
         }
+        
+    }
+    
+    func createRow(NumOfBricks: Int, Xspace: Int, Yoffset: CGFloat, Color: UIColor)
+    {
+        var blockX = 10
+        let blockY = Yoffset
+        let widthSpace = (Int(view.frame.width) - 20) - ((NumOfBricks-1) * Xspace)
+        let brickWidth = (widthSpace / NumOfBricks)
+        
+        for items in 1...NumOfBricks
+        {
+            let newBlock = UIView(frame: CGRectMake(CGFloat(blockX), blockY, CGFloat(brickWidth), 30 ))
+            newBlock.backgroundColor = Color
+            view.addSubview(newBlock)
+            brickArray.append(newBlock)
+            everythingArray.append(newBlock)
+            print("value\(blockX) width: \(brickWidth) xspace: \(Xspace)")
+            blockX = blockX + brickWidth + Xspace
+        }
+
     }
     
 
